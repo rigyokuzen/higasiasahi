@@ -8,9 +8,9 @@
     "main": "index.js",
 
     "scripts": {
-        // "dev": "webpack-dev-server --config webpack.server.js",
+
         "start": "node Server/server.js"
-            // "build": "webpack --config webpack.config.js --progress --colors"
+
     },
     "author": "li",
     "license": "ISC",
