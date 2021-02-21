@@ -216,8 +216,8 @@ router.get('/', async function(ctx) {
 //开启服务
 const path = require('path');
 const serve = require('koa-static');
-app.use(serve('script'));
-app.use(serve('style'));
+app.use(serve('./script'));
+app.use(serve('./style'));
 app.use(serve(__dirname + '/images'));
 
 app.use(router.routes())
