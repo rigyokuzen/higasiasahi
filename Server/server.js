@@ -209,7 +209,7 @@ router.post('/api/addDesk', koaBody(), async function(ctx, next) {
 router.get('/', async function(ctx) {
     console.log(121212)
     var fileName = 'index.html';
-    await send(ctx, fileName, { root: '../build' });
+    await send(ctx, fileName, {});
 });
 
 
@@ -217,7 +217,7 @@ router.get('/', async function(ctx) {
 const path = require('path');
 const serve = require('koa-static');
 app.use(serve(__dirname + '/images'));
-app.use(serve('../build'));
+
 
 app.use(router.routes())
     .use(router.allowedMethods())
