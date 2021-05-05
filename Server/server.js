@@ -227,7 +227,7 @@ router.get('/', async function(ctx) {
 const path = require('path');
 const serve = require('koa-static');
 app.use(serve(__dirname + '/images'));
-app.use(serve('./build'));
+app.use(serve('.'));
 app.use(router.routes())
     .use(router.allowedMethods())
     .use(koaBody());
