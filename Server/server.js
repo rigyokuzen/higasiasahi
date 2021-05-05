@@ -37,26 +37,36 @@ router.post('/api/addOrderItems', koaBody(), async function(ctx, next) {
     const equipmentid = returnValues.rows[0].id;
     const orderDate = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
     // console.log('equipment  :' + JSON.stringify(returnValues.rows[0]));
+    console.log(getOrderInfo());
     const returnValues2 = await ctx.app.pool.query(addOrderItems(), [body.shopid, body.productid, body.deskid, equipmentid, orderDate, false, null, body.counts]);
 })
 
 // 搜索结果页 - 搜索结果 - 三个参数
-var searchListData = require('./search/list.js')
-router.get('/api/search/:page/:city/:category/:keyword', function(ctx, next) {
-        // 参数
-        const paramsPage = ctx.params.page
-        const paramsCity = ctx.params.city
-        const paramsCategory = ctx.params.category
-        const paramsKeyword = ctx.params.keyword
+// var searchListData = require('./search/list.js')
+// router.get('/api/search/:page/:city/:category/:keyword', function(ctx, next) {
+//         // 参数
+//         const paramsPage = ctx.params.page
+//         const paramsCity = ctx.params.city
+//         const paramsCategory = ctx.params.category
+//         const paramsKeyword = ctx.params.keyword
 
-        console.log('当前页数：' + paramsPage)
-        console.log('当前城市：' + paramsCity)
-        console.log('当前类别：' + paramsCategory)
-        console.log('关键字：' + paramsKeyword)
+//         console.log('当前页数：' + paramsPage)
+//         console.log('当前城市：' + paramsCity)
+//         console.log('当前类别：' + paramsCategory)
+//         console.log('关键字：' + paramsKeyword)
 
-        ctx.body = searchListData
-    })
-    // 搜索结果页 - 搜索结果 - 两个参数
+//         ctx.body = searchListData
+//     })
+const { getSearchList } = require('./search/list.js');
+router.get('/api/search/:category', async function(ctx, next) {
+    const category = ctx.params.category
+    console.log(category);
+    console.log(getSearchList(category));
+    const returnValues = await ctx.app.pool.query(getSearchList(category));
+    console.log(returnValues.rows);
+    ctx.body = { data: returnValues.rows }
+});
+// 搜索结果页 - 搜索结果 - 两个参数
 router.get('/api/search/:page/:city/:category', function(ctx, next) {
     // 参数
     const paramsPage = ctx.params.page
@@ -209,16 +219,15 @@ router.post('/api/addDesk', koaBody(), async function(ctx, next) {
 router.get('/', async function(ctx) {
     console.log(121212)
     var fileName = 'index.html';
-    await send(ctx, fileName, {});
+    await send(ctx, fileName, { root: './build' });
 });
 
 
 //开启服务
 const path = require('path');
 const serve = require('koa-static');
-app.use(serve('.'));
 app.use(serve(__dirname + '/images'));
-
+app.use(serve('./build'));
 app.use(router.routes())
     .use(router.allowedMethods())
     .use(koaBody());

@@ -48,7 +48,7 @@ function getOrderInfo() {
     sqlStr += ' join orders on orders.shopid = shop.id'
     sqlStr += ' JOIN PRODUCT ON PRODUCT.ID = ORDERS.PRODUCTID'
     sqlStr += ' JOIN price ON PRODUCT.ID = price.PRODUCTID'
-    sqlStr += ' where users.email = $1'
+    sqlStr += ' where users.email = $1 order by orders.orderdate desc'
     return sqlStr;
 }
 
