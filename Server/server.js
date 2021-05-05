@@ -219,7 +219,7 @@ router.post('/api/addDesk', koaBody(), async function(ctx, next) {
 router.get('/', async function(ctx) {
     console.log(121212)
     var fileName = 'index.html';
-    await send(ctx, fileName, { root: './build' });
+    await send(ctx, fileName, {});
 });
 
 
